@@ -1,1 +1,1 @@
-web: ace migration:run
+web: npm install  && node --harmony_proxies ace migration:refresh && npm run serve:dev
