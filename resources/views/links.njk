@@ -1,0 +1,151 @@
+{% extends 'cms/masterCms' %} {% block head %}
+<!-- DataTables CSS -->
+<link href="/cmsEssent/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+
+
+
+<!-- DataTables Responsive CSS -->
+<link href="/cmsEssent/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet"> {% endblock %} {% block content %}
+<div class="col-lg-12">
+    <h1 class="page-header">Link control</h1>
+</div>
+<div class="col-lg-12">
+{{ csrfField }}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            New Link
+            
+        </div>
+        
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+                    {% if old('errors') %}
+  <div class="alert alert-danger">
+    {% for error in old('errors') %}
+      <li> {{ error.message }} </li>
+    {% endfor %}
+  </div>
+{% endif %}
+            <div class="table-responsive" style="overflow: visible;">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+
+                        <tr>
+                            <th>Source</th>
+                            <th>Target</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {{ form.open({action: 'AiController.linkNew'}) }}
+                            
+                            <td>
+                                <select class="selectpicker source" data-live-search="true" title="Pick a source node">
+                                    <option>----</option>
+                                    {% for node in nodes %}
+                                        <option value="{{node.id}}">{{node.title}}, {{node.group}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <select class="selectpicker target" data-live-search="true" title="Pick a target node">
+                                    <option>----</option>
+                                    {% for node in nodes %}
+                                        <option value="{{node.id}}">{{node.title}}, {{node.group}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <select class="selectpicker type" title="Pick a type">
+                                    <option value="red">Red</option>
+                                    <option value="green">Green</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="white">White</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                 {{ form.hidden('source', null, {class: 'sourceI'}) }}
+                 {{ form.hidden('target', null, {class: 'targetI'} ) }} 
+                 {{ form.hidden('type') }} 
+                 {{ form.submit('Create Link', 'submit', { class: 'btn btn-primary' }) }} {{ form.resetButton('Clear', 'clear', { class: 'btn btn-primary'}) }} {{csrfField }} {{ form.close() }}
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-7 -->
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Links
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="user-table">
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Target</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for link in links %}
+                    <tr>
+                        {{ form.open({action: 'AiController.linkDestroy'}) }}
+                        <td><button type="submit" style="color: red; cursor: pointer; padding: 0;" name="id" class="btn btn-link"
+                                value="{{ link.id }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></button> {{ link.source
+                            }}</td>
+                       {{ form.close() }}
+                        <td>{{ link.target }}</td>
+                        <td>{{ link.type }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+{% endblock %} {% block footerscript %}
+<!-- DataTables JavaScript -->
+<script src="/cmsEssent/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/cmsEssent/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="/cmsEssent/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    //dynamic data table
+    $(document).ready(function () {
+        $('#user-table').DataTable({
+            responsive: true
+        });
+    });
+    // slectpicker 
+    $('.source').change(function (e) {
+        $('input[name="source"]').val(e.target.value)
+    });
+
+    $('.target').change(function (e) {
+        $('input[name="target"]').val(e.target.value)
+    });
+
+    $('.type').change(function (e) {
+        $('input[name="type"]').val(e.target.value)
+    });
+
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+{% endblock %}
