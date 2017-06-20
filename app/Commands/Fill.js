@@ -18,7 +18,7 @@ class Fill extends Command {
 
         const successIcon = this.icon('success')
 
-        const user1 = yield User.create({ username: 'admin', password: 'ZeecontainerBeast072' })
+        const user1 = yield User.create({ username: 'admin', password: 'ZeecontainerBeast072', email: 'meh' })
 
         // Manually close the DB
         Database.close()
