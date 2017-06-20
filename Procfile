@@ -1,1 +1,1 @@
-web: npm install  && node --harmony_proxies ace migration:refresh && node server.js
+web: npm install  && node --harmony_proxies ace migration:refresh --force && node server.js
