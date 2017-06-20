@@ -25,6 +25,7 @@
     "adonis-websocket": "^1.0.3",
     "bootstrap-select": "^1.12.2",
     "mysql": "^2.13.0",
+    "pg": "^6.3.0",
     "youch": "^2.0.4"
   },
   "standard": {
